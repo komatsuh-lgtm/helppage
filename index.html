@@ -170,12 +170,13 @@
   .sys { display: grid; gap: 14px; }
   .sys-item { border: 1px solid var(--line); border-radius: 12px; padding: 15px 18px; background: var(--surface-2); }
   .sys-item .sys-name { font-weight: 700; font-size: 1.04rem; color: var(--ink); display: flex; align-items: center; gap: 8px; }
-  .sys-star { color: var(--orange); font-weight: 800; }
+  .sys-star { color: var(--orange); font-weight: 800; display: inline-block; width: 1em; text-align: center; }
   .sys-item .sys-role { color: var(--muted); font-size: .85rem; margin: 3px 0 12px; }
   .card ul.contacts { list-style: none; padding: 0; margin: 0; display: grid; gap: 7px; font-size: .92rem; }
   .card ul.contacts li { padding-left: 0; margin: 0; color: var(--ink-soft); }
   .card ul.contacts li::before { display: none; }
   .contacts .k { color: var(--muted); display: inline-block; min-width: 8.5em; font-size: .85rem; }
+  .sys-item .contacts .k { min-width: 11.5em; }
   .contacts a { color: var(--green-dark); word-break: break-all; }
   @media (max-width: 460px) {
     .contacts li { display: flex; flex-direction: column; gap: 1px; }
@@ -211,29 +212,32 @@
   details.faq .ans p { margin: 0; }
 
   /* contact */
-  .contact {
-    background: linear-gradient(135deg, var(--green), var(--green-dark));
-    border-radius: 18px; padding: 34px 30px; color: #fff; box-shadow: var(--shadow);
-  }
-  .contact h2 { margin: 0 0 8px; font-size: 1.45rem; color: #fff; }
-  .contact p.sub { margin: 0 0 22px; color: rgba(255,255,255,.9); }
-  .contact-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+  .contact-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-top: 4px; }
   @media (max-width: 560px) { .contact-grid { grid-template-columns: 1fr; } }
   .cbox {
-    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
+    background: var(--surface-2); border: 1px solid var(--line);
     border-radius: 12px; padding: 16px 18px;
   }
-  .cbox .lab { font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.75); margin-bottom: 6px; }
-  .cbox .val { font-size: 1.12rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .cbox .val .fill { background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.4); }
-  .cbox .sm { font-size: .86rem; color: rgba(255,255,255,.82); margin-top: 4px; }
-  .urgent { margin-top: 18px; background: rgba(249,137,56,.2); border: 1px solid rgba(249,137,56,.5); border-radius: 12px; padding: 14px 18px; font-size: .94rem; }
-  .urgent strong { color: #ffdcb8; }
+  .cbox .lab { font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .cbox .val { font-size: 1.12rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .cbox .val a { color: var(--green-dark); }
+  .cbox .sm { font-size: .86rem; color: var(--muted); margin-top: 4px; }
+  .urgent { margin-top: 16px; background: var(--fill-bg); border: 1px solid var(--fill-line); border-radius: 12px; padding: 14px 18px; font-size: .94rem; color: var(--ink-soft); }
+  .urgent strong { color: var(--fill-ink); }
 
   footer.site { border-top: 1px solid var(--line); padding: 28px 0 44px; color: var(--muted); font-size: .86rem; }
   footer.site .wrap { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between; }
 
   a.inline { color: var(--green-dark); }
+
+  .btn {
+    display: inline-block; text-decoration: none;
+    background: var(--green); color: #fff; font-weight: 700; font-size: .98rem;
+    padding: 12px 24px; border-radius: 999px; box-shadow: var(--shadow);
+    transition: background .15s, transform .15s;
+  }
+  .btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+
   svg { display: block; }
 </style>
 </head>
@@ -258,12 +262,17 @@
     <div class="quick">
       <a class="qcard" href="#kintai">
         <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-        <span class="t">勤怠について<span class="arw"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>
+        <span class="t">勤怠<span class="arw"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>
         <span class="d">勤怠システムと問い合わせ先、勤務時間の報告、欠勤の連絡</span>
+      </a>
+      <a class="qcard" href="#keiyaku">
+        <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 16h4"/></svg></span>
+        <span class="t">契約<span class="arw"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>
+        <span class="d">就業規則、個人情報利用同意書、誓約書などの契約関連書面</span>
       </a>
       <a class="qcard" href="#kyuka">
         <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M9 15l2 2 4-4"/></svg></span>
-        <span class="t">休暇について<span class="arw"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>
+        <span class="t">休暇<span class="arw"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>
         <span class="d">有給休暇の付与ルール、申請・取得のしかた</span>
       </a>
       <a class="qcard" href="#kyuyo">
@@ -288,7 +297,7 @@
   <div class="view" id="view-kintai">
     <a class="back" href="#home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>メニューに戻る</a>
     <section class="block" id="kintai">
-      <div class="sec-head"><span class="num">01</span><h2>勤怠について</h2></div>
+      <div class="sec-head"><span class="num">01</span><h2>勤怠</h2></div>
 
       <div class="card">
         <h3>勤務時間の報告（勤怠報告）</h3>
@@ -327,7 +336,7 @@
             </ul>
           </div>
           <div class="sys-item">
-            <div class="sys-name">Digisheet（デジシート）</div>
+            <div class="sys-name"><span class="sys-star"></span>Digisheet（デジシート）</div>
             <div class="sys-role">操作の問い合わせ先：TOKIUMスタッフィング（当社）</div>
             <ul class="contacts">
               <li><span class="k">電話</span>050-5783-0843（平日 9:00〜18:00）</li>
@@ -352,11 +361,48 @@
     </section>
   </div>
 
+  <!-- ========== 契約・手続き ========== -->
+  <div class="view" id="view-keiyaku">
+    <a class="back" href="#home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>メニューに戻る</a>
+    <section class="block" id="keiyaku">
+      <div class="sec-head"><span class="num">02</span><h2>契約</h2></div>
+
+      <p style="margin:0 0 20px; color:var(--muted); font-size:.95rem;">TOKIUMスタッフィングでは、雇用契約に併せて以下の書面を定め、ご同意いただいています。内容は改定される場合がありますので、最新版をご確認ください。</p>
+
+      <div class="card">
+        <h3>就業規則</h3>
+        <p>TOKIUMスタッフィングが定める就業規則です。勤務・休暇・服務など、就業にあたっての基本的なルールを記載しています。</p>
+        <ul class="contacts">
+          <li><span class="k">書面</span><a class="fill" data-link="work_rules_url" data-link-label="就業規則を開く" href="#" target="_blank" rel="noopener">準備中</a></li>
+        </ul>
+        <div class="note"><strong>改訂履歴：</strong>2025年6月1日 改定</div>
+      </div>
+
+      <div class="card">
+        <h3>個人情報利用同意書</h3>
+        <p>雇用契約に併せて、個人情報の取り扱いについてご同意いただく書面です。</p>
+        <ul class="contacts">
+          <li><span class="k">書面</span><a class="fill" data-link="consent_form_url" data-link-label="書面を開く" href="#" target="_blank" rel="noopener">準備中</a></li>
+        </ul>
+        <div class="note"><strong>改訂履歴：</strong>2025年6月1日 改定</div>
+      </div>
+
+      <div class="card">
+        <h3>誓約書</h3>
+        <p>雇用契約に併せてご同意いただく書面です。</p>
+        <ul class="contacts">
+          <li><span class="k">書面</span><a class="fill" data-link="pledge_form_url" data-link-label="書面を開く" href="#" target="_blank" rel="noopener">準備中</a></li>
+        </ul>
+        <div class="note"><strong>改訂履歴：</strong>2025年6月1日 改定</div>
+      </div>
+    </section>
+  </div>
+
   <!-- ========== 休暇 ========== -->
   <div class="view" id="view-kyuka">
     <a class="back" href="#home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>メニューに戻る</a>
     <section class="block" id="kyuka">
-      <div class="sec-head"><span class="num">02</span><h2>休暇について</h2></div>
+      <div class="sec-head"><span class="num">03</span><h2>休暇</h2></div>
 
       <div class="note" style="margin:0 0 16px;">有給休暇の制度は改定される場合があります。最新かつ詳細な内容は就業規則をご確認ください。（就業規則：<a class="fill" data-link="work_rules_url" data-link-label="就業規則を開く" href="#" target="_blank" rel="noopener">準備中</a>）</div>
 
@@ -377,7 +423,7 @@
         <ul>
           <li><strong>申請の期限：</strong>取得を希望する日の前日までに届け出てください。本人の急病など真にやむを得ない事情がある場合を除き、当日の申し出は認められません</li>
           <li><strong>取得の単位：</strong>1日単位のほか、半日単位でも取得できます</li>
-          <li><strong>申請方法：</strong><span class="fill" data-key="leave_apply_method">確認中</span></li>
+          <li><strong>申請方法：</strong><span data-key="leave_apply_method">勤怠システムから入力・登録をお願いいたします。</span></li>
         </ul>
         <div class="note">業務状況により、取得日の調整をお願いする場合があります。</div>
       </div>
@@ -388,7 +434,7 @@
   <div class="view" id="view-kyuyo">
     <a class="back" href="#home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>メニューに戻る</a>
     <section class="block" id="kyuyo">
-      <div class="sec-head"><span class="num">03</span><h2>給与・福利厚生について</h2></div>
+      <div class="sec-head"><span class="num">04</span><h2>給与・福利厚生</h2></div>
 
       <div class="card">
         <h3>締め日・支給日</h3>
@@ -431,10 +477,16 @@
       </div>
 
       <div class="card">
-        <h3>年末調整・その他</h3>
+        <h3>健康診断</h3>
         <ul>
-          <li><strong>年末調整：</strong>対象となる方には、時期になりましたら書類提出のご案内をします。</li>
-          <li><strong>健康診断：</strong>対象となる方には、時期になりましたらご案内をします。</li>
+          <li>対象となる方には、時期になりましたらご案内をします。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>年末調整</h3>
+        <ul>
+          <li>対象となる方には、時期になりましたら書類提出のご案内をします。</li>
         </ul>
       </div>
     </section>
@@ -444,7 +496,7 @@
   <div class="view" id="view-faq">
     <a class="back" href="#home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>メニューに戻る</a>
     <section class="block" id="faq">
-      <div class="sec-head"><span class="num">04</span><h2>よくあるご質問</h2></div>
+      <div class="sec-head"><span class="num">05</span><h2>よくあるご質問</h2></div>
 
       <details class="faq">
         <summary>体調不良で当日お休みしたいときは、どうすればいいですか？</summary>
@@ -452,11 +504,7 @@
       </details>
       <details class="faq">
         <summary>有給休暇はいつから使えますか？残りの日数はどこで分かりますか？</summary>
-        <div class="ans"><p>就業開始から6か月間継続して勤務し、8割以上出勤された時点で初回10日が付与され、7か月目からご使用いただけます（例：4月1日就業開始なら10月1日に付与）。残日数は担当者へのお問い合わせでご確認いただけます。</p></div>
-      </details>
-      <details class="faq">
-        <summary>休日も就業報告を行う必要がありますか？</summary>
-        <div class="ans"><p>はい。休日明けの対応で問題ございませんので、休日も就業報告を行ってください。</p></div>
+        <div class="ans"><p>就業開始から6か月間継続して勤務し、8割以上出勤された時点で初回10日が付与され、7か月目からご使用いただけます（例：4月1日就業開始なら10月1日に付与）。残日数は勤怠システムからご確認ください。</p></div>
       </details>
       <details class="faq">
         <summary>在宅勤務のときの登録方法を教えてください。</summary>
@@ -468,15 +516,27 @@
       </details>
       <details class="faq">
         <summary>給与明細の内容が契約と違う気がします。どうすればいいですか？</summary>
-        <div class="ans"><p>まずは勤怠報告の勤務時間と明細の内容をご確認ください。相違がある場合は、支給日からお早めに営業担当者までご相談ください。内容を確認のうえ対応します。</p></div>
+        <div class="ans"><p>まずは勤怠報告の勤務時間と明細の内容をご確認ください。相違がある場合は、支給日からお早めに<a class="inline" href="#contact">担当者</a>までご相談ください。内容を確認のうえ対応します。</p></div>
       </details>
       <details class="faq">
         <summary>就業先を変えたい・契約を更新したくないときは？</summary>
-        <div class="ans"><p>今後のご希望がある場合は、契約更新の時期より前に担当者へご相談ください。契約期間や次のお仕事について、状況にあわせてご案内します。</p></div>
+        <div class="ans"><p>今後のご希望がある場合は、契約更新の時期より前に営業担当者へご相談ください。契約期間や次のお仕事について、状況にあわせてご案内します。</p></div>
       </details>
       <details class="faq">
         <summary>住所や振込口座、氏名などが変わりました。</summary>
         <div class="ans"><p>変更が生じた場合は、速やかに<a class="inline" href="#contact">担当者</a>までご連絡ください。手続きに必要な書類などをご案内します。</p></div>
+      </details>
+      <details class="faq">
+        <summary>健康保険証はいつ頃届きますか？</summary>
+        <div class="ans"><p>行政手続きの関係で具体的な日程はお伝えしかねますが、おおむね1か月程度でお手元に届くかと存じます。</p></div>
+      </details>
+      <details class="faq">
+        <summary>保険証が手元にない間に通院するときはどうすればいいですか？</summary>
+        <div class="ans"><p>保険証がお手元にない間の通院費は、ご自身でご負担いただきます。</p></div>
+      </details>
+      <details class="faq">
+        <summary>経費精算が発生したときはどうすればいいですか？</summary>
+        <div class="ans"><p>勤怠システムに登録をお願いいたします。</p></div>
       </details>
     </section>
   </div>
@@ -485,9 +545,16 @@
   <div class="view" id="view-contact">
     <a class="back" href="#home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>メニューに戻る</a>
     <section class="block" id="contact">
-      <div class="contact">
-        <h2>お問い合わせ</h2>
-        <p class="sub">お仕事やお手続きでご不明な点は、お気軽にご連絡ください。担当者が対応いたします。</p>
+      <div class="sec-head"><span class="num">06</span><h2>お問い合わせ</h2></div>
+
+      <div class="card">
+        <p>お仕事やお手続きでご不明な点は、以下のフォームからのご回答にご協力ください。<br>担当者が確認のうえ、順次対応いたします。</p>
+        <p style="margin-bottom:0;"><a class="btn" data-link="contact_form_url" data-link-label="お問い合わせフォームはこちら" href="https://forms.gle/aB3Wpf6sxLRH4tgW8" target="_blank" rel="noopener">お問い合わせフォームはこちら</a></p>
+      </div>
+
+      <div class="card">
+        <h3>お急ぎの場合</h3>
+        <p>お急ぎの場合は、電話やメールにてご連絡ください。</p>
         <div class="contact-grid">
           <div class="cbox">
             <div class="lab">電話</div>
@@ -496,11 +563,10 @@
           </div>
           <div class="cbox">
             <div class="lab">メール</div>
-            <div class="val" style="font-size:.98rem; word-break:break-all;" data-key="email">staffing_corporate@tokium.jp</div>
+            <div class="val" style="font-size:.98rem; word-break:break-all;"><a href="mailto:staffing_corporate@tokium.jp" data-key="email">staffing_corporate@tokium.jp</a></div>
             <div class="sm">返信までお時間をいただく場合があります。</div>
           </div>
         </div>
-        <div class="urgent"><strong>当日の欠勤・遅刻など急ぎのご連絡</strong>は、始業前までに、まず派遣先へご連絡のうえ、弊社所定の連絡フォームからご連絡ください。</div>
       </div>
     </section>
   </div>
@@ -521,8 +587,9 @@
   ・URLが空、または取得に失敗した場合は、HTMLの初期表示のまま表示されます。
   ・content.json は { "キー": "値" } 形式（JSON）。使用しているキー：
       closing_date / pay_date / tel / tel_hours / email /
-      leave_apply_method / attendance_form_url /
-      digisheet_manual_pc_url / digisheet_manual_sp_url / work_rules_url
+      leave_apply_method / attendance_form_url / contact_form_url /
+      digisheet_manual_pc_url / digisheet_manual_sp_url / work_rules_url /
+      consent_form_url / pledge_form_url
   ・更新：GitHubで content.json を編集してコミット → 数分以内にページへ反映（再読み込み）。
 */
 (function () {
@@ -558,6 +625,7 @@
     "": "view-home",
     "#home": "view-home",
     "#kintai": "view-kintai",
+    "#keiyaku": "view-keiyaku",
     "#kyuka": "view-kyuka",
     "#kyuyo": "view-kyuyo",
     "#faq": "view-faq",
