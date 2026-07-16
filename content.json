@@ -4,9 +4,12 @@
   "tel": "050-5783-0843",
   "tel_hours": "平日 9:00〜18:00",
   "email": "staffing_corporate@tokium.jp",
-  "leave_apply_method": "確認中",
+  "leave_apply_method": "勤怠システムから入力・登録をお願いいたします。",
   "attendance_form_url": "https://forms.gle/ubGXuTnjAeUiYEdWA",
+  "contact_form_url": "https://forms.gle/aB3Wpf6sxLRH4tgW8",
   "digisheet_manual_pc_url": "docs/digisheet_manual_pc.pdf",
   "digisheet_manual_sp_url": "docs/digisheet_manual_smartphone.pdf",
-  "work_rules_url": ""
+  "work_rules_url": "docs/work_rules.pdf",
+  "consent_form_url": "docs/personal_information_usage_agreement.pdf",
+  "pledge_form_url": "docs/letter_of_commitment.pdf"
 }
