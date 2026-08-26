@@ -197,6 +197,70 @@
   .card ul li { position: relative; padding-left: 22px; margin-bottom: 8px; color: var(--ink-soft); }
   .card ul li::before { content: ""; position: absolute; left: 4px; top: 11px; width: 7px; height: 7px; border-radius: 50%; background: var(--light-green); }
   .card ul li strong { color: var(--ink); font-weight: 700; }
+  .card h4 {
+    margin: 26px 0 10px; font-size: .99rem; color: var(--ink); font-weight: 700;
+    padding-bottom: 7px; border-bottom: 1px solid var(--line);
+  }
+  .card h4:first-of-type { margin-top: 20px; }
+  .card .tbl-wrap + h4, .card .note + h4, .card .urgent + h4 { margin-top: 24px; }
+  .card details.fold + h4 { margin-top: 24px; }
+  .card .tl + h4 { margin-top: 24px; }
+
+  /* カード内の折りたたみ（早見表など、必要な方だけ開く表） */
+  details.fold {
+    border: 1px solid var(--line); border-radius: 10px;
+    background: var(--surface-2); overflow: hidden; margin-top: 12px;
+  }
+  details.fold > summary {
+    cursor: pointer; list-style: none; position: relative;
+    padding: 11px 42px 11px 16px; font-size: .93rem; font-weight: 700; color: var(--green-dark);
+  }
+  details.fold > summary::-webkit-details-marker { display: none; }
+  details.fold > summary::after {
+    content: ""; position: absolute; right: 17px; top: 50%; width: 8px; height: 8px;
+    border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+    transform: translateY(-70%) rotate(45deg); transition: transform .2s;
+  }
+  details.fold[open] > summary::after { transform: translateY(-30%) rotate(225deg); }
+  details.fold > summary:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
+  details.fold .fold-body { padding: 0 14px 14px; }
+  details.fold .fold-note { margin: 0 0 10px; font-size: .88rem; color: var(--muted); }
+  details.fold .tbl-wrap { background: var(--surface); }
+
+  /* 勤務と休暇の時間帯を帯で示す図 */
+  .tl {
+    display: grid; gap: 14px; margin-top: 10px;
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 12px; padding: 15px 16px;
+  }
+  .tl-axis {
+    display: flex; justify-content: space-between; font-size: .8rem; color: var(--muted);
+    border-bottom: 1px dashed var(--line); padding-bottom: 5px;
+  }
+  .tl-row { display: grid; gap: 6px; }
+  .tl-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+  .tl-name { font-weight: 700; color: var(--ink); font-size: .96rem; }
+  .verdict { font-size: .84rem; font-weight: 700; white-space: nowrap; }
+  .verdict.ok { color: var(--green-dark); }
+  .verdict.ng { color: var(--fill-ink); }
+  td > .verdict { display: block; margin-bottom: 4px; }
+  .tl-bar { display: flex; gap: 4px; }
+  .tl-row.ng .tl-bar { opacity: .7; }
+  .seg {
+    flex: 1; display: grid; place-items: center; min-height: 40px; padding: 4px 6px;
+    border-radius: 8px; font-size: .84rem; font-weight: 600; text-align: center;
+  }
+  .seg-work {
+    background: color-mix(in srgb, var(--green) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--green) 45%, var(--line));
+    color: var(--green-deep);
+  }
+  .seg-leave { background: var(--fill-bg); border: 1px solid var(--fill-line); color: var(--fill-ink); }
+
+  /* 数値だけの詰まった表 */
+  table.compact { font-size: .89rem; min-width: 330px; }
+  table.compact th, table.compact td { padding: 7px 12px; }
+  table.compact td { font-variant-numeric: tabular-nums; }
 
   /* steps */
   .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; }
@@ -355,7 +419,7 @@
       <a class="qcard" href="#kyuka">
         <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M9 15l2 2 4-4"/></svg></span>
         <span class="t">休暇<span class="arw"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>
-        <span class="d">有給休暇の付与ルール、申請・取得のしかた</span>
+        <span class="d">有給休暇の付与ルール、申請・取得のしかた、半日有給休暇</span>
       </a>
       <a class="qcard" href="#kyuyo">
         <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></svg></span>
@@ -593,10 +657,101 @@
         <h3>有給休暇の申請・取得</h3>
         <ul>
           <li><strong>申請の期限：</strong>取得を希望する日の前日までに届け出てください。本人の急病など真にやむを得ない事情がある場合を除き、当日の申し出は認められません。</li>
-          <li><strong>取得の単位：</strong>1日単位のほか、半日単位でも取得できます。</li>
+          <li><strong>取得の単位：</strong>1日単位のほか、半日単位でも取得できます。条件・時間の数え方は下記「半日有給休暇」をご覧ください。</li>
           <li><strong>申請方法：</strong><span data-key="leave_apply_method">勤怠システムから入力・登録をお願いいたします。</span></li>
         </ul>
         <div class="note">業務状況により、取得日の調整をお願いする場合があります。</div>
+      </div>
+
+      <div class="card">
+        <h3>半日有給休暇</h3>
+        <p>1日の所定労働時間を半分に分けて、前半または後半のどちらかをお休みにできる制度です。取得の条件と、休暇時間の数え方をまとめました。</p>
+
+        <h4>取得できる方</h4>
+        <p>次の3つをすべて満たしている場合に取得できます。</p>
+        <ul>
+          <li><strong>年次有給休暇が付与されている：</strong>就業開始から6か月が経過し、年次有給休暇が付与されていること。</li>
+          <li><strong>残日数が0.5日以上ある：</strong>半日有給休暇は、1回の取得につき0.5日分を消費します。</li>
+          <li><strong>その日の所定労働時間が6時間以上：</strong>所定労働時間は契約内容によって異なります。「雇用契約書兼就業条件明示書」でご確認ください。</li>
+        </ul>
+
+        <h4>取得できる時間帯</h4>
+        <p>所定労働時間の<strong>前半</strong>、または<strong>後半</strong>のどちらかで取得します。勤務時間の途中で抜ける形（中抜け）では取得できません。</p>
+        <div class="tl">
+          <div class="tl-axis"><span>始業</span><span>終業</span></div>
+          <div class="tl-row">
+            <div class="tl-head"><span class="tl-name">前半休</span><span class="verdict ok">○ 取得できます</span></div>
+            <div class="tl-bar">
+              <span class="seg seg-leave">有給休暇</span>
+              <span class="seg seg-work">勤務</span>
+            </div>
+          </div>
+          <div class="tl-row">
+            <div class="tl-head"><span class="tl-name">後半休</span><span class="verdict ok">○ 取得できます</span></div>
+            <div class="tl-bar">
+              <span class="seg seg-work">勤務</span>
+              <span class="seg seg-leave">有給休暇</span>
+            </div>
+          </div>
+          <div class="tl-row ng">
+            <div class="tl-head"><span class="tl-name">中抜け</span><span class="verdict ng">✕ 取得できません</span></div>
+            <div class="tl-bar">
+              <span class="seg seg-work">勤務</span>
+              <span class="seg seg-leave" style="flex:2">有給休暇</span>
+              <span class="seg seg-work">勤務</span>
+            </div>
+          </div>
+        </div>
+
+        <h4>休暇時間の計算</h4>
+        <p>半日有給休暇の時間は、2つのステップで決まります。</p>
+        <ol class="steps">
+          <li><strong>所定労働時間を求める</strong><span>就業終了時間 － 就業開始時間 － 休憩時間<br>例：11:00〜18:00（休憩45分）のご契約なら、18:00 － 11:00 － 0:45 ＝ 6時間15分</span></li>
+          <li><strong>その半分を出す（1分未満は切り上げ）</strong><span>所定労働時間 ÷ 2。割り切れずに秒が出る場合は、給料支給規定にもとづき1分単位で切り上げます。<br>例：6時間15分 ÷ 2 ＝ 3時間07分30秒 → 3時間08分</span></li>
+        </ol>
+        <details class="fold">
+          <summary>所定労働時間ごとの早見表を開く（10パターン）</summary>
+          <div class="fold-body">
+            <p class="fold-note">当社でよくある所定労働時間について、あらかじめ計算しています。</p>
+            <div class="tbl-wrap">
+              <table class="compact">
+                <thead>
+                  <tr><th>所定労働時間</th><th>有給休暇（半日）</th><th>就業（半日）</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>〜5時間59分</td><td colspan="2">半日有給休暇は取得できません</td></tr>
+                  <tr><td>6時間00分</td><td>3時間00分</td><td>3時間00分</td></tr>
+                  <tr><td>6時間15分</td><td>3時間08分</td><td>3時間07分</td></tr>
+                  <tr><td>6時間30分</td><td>3時間15分</td><td>3時間15分</td></tr>
+                  <tr><td>6時間45分</td><td>3時間23分</td><td>3時間22分</td></tr>
+                  <tr><td>7時間00分</td><td>3時間30分</td><td>3時間30分</td></tr>
+                  <tr><td>7時間15分</td><td>3時間38分</td><td>3時間37分</td></tr>
+                  <tr><td>7時間30分</td><td>3時間45分</td><td>3時間45分</td></tr>
+                  <tr><td>7時間45分</td><td>3時間53分</td><td>3時間52分</td></tr>
+                  <tr><td>8時間00分</td><td>4時間00分</td><td>4時間00分</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <h4>実働時間による扱い</h4>
+        <p><strong>実働時間が所定労働時間以上になった場合、半休は取得できません。</strong>半休を取得した日は、実働時間によって扱いが変わります。前半休・後半休のいずれも同じ扱いです。とくに残業が発生したときはご注意ください。</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>その日の実働時間</th><th>例：所定労働時間6時間<br>（半休3時間）の場合</th><th>半休の扱い</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>所定労働時間の半分以下だった<br>（遅刻・早退など）</td><td>実働3時間</td><td><span class="verdict ok">○ 取得できます</span>半日有給休暇 ＋ 半日欠勤として処理します。</td></tr>
+              <tr><td>予定を超えて就業したが、所定労働時間には届かなかった</td><td>実働6時間未満</td><td><span class="verdict ok">○ 取得できます</span>半日有給休暇をそのまま適用します。</td></tr>
+              <tr><td>所定労働時間以上になった</td><td>実働6時間以上</td><td><span class="verdict ng">✕ 取得できません</span>半日有給休暇は取消となります。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="urgent"><strong>⚠ 取消は自動で行われます。</strong><br>半休の予定時間に勤務した結果、実働が所定労働時間以上になった場合はご注意ください。</div>
+
+        <div class="note">所定労働時間はご契約ごとに異なります。ご自身の時間は「雇用契約書兼就業条件明示書」でご確認ください。ご不明な点は、担当営業または管理部までお問い合わせください。</div>
       </div>
     </section>
   </div>
@@ -678,6 +833,10 @@
       <details class="faq">
         <summary>有給休暇はいつから使えますか？残りの日数はどこで分かりますか？</summary>
         <div class="ans"><p>就業開始から6か月間継続して勤務し、8割以上出勤された時点で初回10日が付与され、7か月目からご使用いただけます（例：4月1日就業開始なら10月1日に付与）。残日数は勤怠システムからご確認ください。</p></div>
+      </details>
+      <details class="faq">
+        <summary>半日有給休暇（半休）は取れますか？</summary>
+        <div class="ans"><p>年次有給休暇が付与済みで残日数が0.5日以上あり、その日の所定労働時間が6時間以上であれば取得できます。所定労働時間の前半または後半のどちらかで取得する形となり、勤務時間の途中で抜ける中抜けはできません。時間の数え方や早見表は<a class="inline" href="#kyuka">休暇</a>のページをご覧ください。</p></div>
       </details>
       <details class="faq">
         <summary>在宅勤務のときの登録方法を教えてください。</summary>
@@ -892,7 +1051,7 @@
     return (start > 0 ? "…" : "") + text.slice(start, start + 100) + (text.length > start + 100 ? "…" : "");
   }
 
-  function openItem(it) {
+  function openItem(it, terms) {
     input.value = "";
     panel.hidden = true;
     if (location.hash === it.hash) { if (window.__route) window.__route(); }
@@ -900,6 +1059,11 @@
     setTimeout(function () {
       if (!it.el) return;
       if (it.el.tagName === "DETAILS") it.el.open = true;
+      // カード内の折りたたみは、検索語が中にある場合だけ開く
+      it.el.querySelectorAll("details.fold").forEach(function (d) {
+        var hay = d.textContent.toLowerCase();
+        if ((terms || []).some(function (t) { return hay.indexOf(t) !== -1; })) d.open = true;
+      });
       it.el.scrollIntoView({ behavior: "smooth", block: "center" });
       it.el.classList.add("search-hit");
       setTimeout(function () { it.el.classList.remove("search-hit"); }, 1800);
@@ -928,7 +1092,7 @@
       var title = document.createElement("div"); title.className = "sr-title"; title.textContent = it.title;
       var snip = document.createElement("div"); snip.className = "sr-snip"; snip.textContent = snippet(it.text, terms[0]);
       a.appendChild(cat); a.appendChild(title); a.appendChild(snip);
-      a.addEventListener("click", function (e) { e.preventDefault(); openItem(it); });
+      a.addEventListener("click", function (e) { e.preventDefault(); openItem(it, terms); });
       results.appendChild(a);
     });
     window.scrollTo(0, 0);
