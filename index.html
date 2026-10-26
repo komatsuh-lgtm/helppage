@@ -275,6 +275,7 @@
   .steps li:not(:last-child)::after { content: ""; position: absolute; left: 14px; top: 32px; bottom: 2px; width: 2px; background: var(--line); }
   .steps li strong { display: block; color: var(--ink); }
   .steps li span { color: var(--muted); font-size: .92rem; }
+  .steps .step-img { display: block; max-width: 100%; width: 420px; height: auto; margin-top: 8px; border: 1px solid var(--line); border-radius: 8px; }
 
   /* fill-in placeholder */
   .fill {
@@ -859,7 +860,15 @@
       </details>
       <details class="faq">
         <summary>住所や振込口座、氏名などが変わりました。</summary>
-        <div class="ans"><p>変更が生じた場合は、速やかに<a class="inline" href="#contact">担当者</a>までご連絡ください。手続きに必要な書類などをご案内します。</p></div>
+        <div class="ans">
+          <p>スマコムより変更届を提出ください。</p>
+          <ol class="steps">
+            <li><strong>スマコムの「届出」を選択</strong><img class="step-img" src="docs/smacom_step1.png" alt="スマコムの画面。「契約書」と「届出」のボタンがある" loading="lazy"></li>
+            <li><strong>「変更届」を選択</strong><img class="step-img" src="docs/smacom_step2.png" alt="届出の画面。「入社届」と「変更届」のボタンがある" loading="lazy"></li>
+            <li><strong>該当する届を選択して提出</strong><span>・住所氏名変更届<br>・給与振込口座変更届<br>・扶養控除申告<br>・緊急連絡先変更届</span><img class="step-img" src="docs/smacom_step3.png" alt="変更届の画面。住所氏名変更届・給与振込口座変更届・扶養控除申告・緊急連絡先変更届のボタンがある" loading="lazy"></li>
+          </ol>
+          <p>上記にない変更事項は<a class="inline" href="#contact">担当者</a>へご連絡ください。</p>
+        </div>
       </details>
       <details class="faq">
         <summary>健康保険証はいつ頃届きますか？</summary>
